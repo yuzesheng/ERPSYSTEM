@@ -336,6 +336,6 @@ AUTHENTICATION_BACKENDS = (
     'guardian.backends.ObjectPermissionBackend',
 )
 
-# 自定义用户模型（如果需要）
-# AUTH_USER_MODEL = 'foundation.User'
+# 自定义用户模型
+AUTH_USER_MODEL = 'foundation.User'
 

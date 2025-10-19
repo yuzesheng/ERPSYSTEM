@@ -20,7 +20,17 @@
       "Bash(npm run dev)",
       "Bash(git init)",
       "Bash(git add .)",
-      "Bash(git commit -m \"初始化企业ERP管理系统项目\n\n- 完成前后端项目结构搭建\n- 完成系统需求设计文档\n- 完成数据库设计文档  \n- 完成API接口设计文档\n- 完成项目开发指南文档\n- 配置Django后端环境(Python 3.11 + Django 5.2.5 + DRF)\n- 配置Vue3前端环境(Vue 3.3.8 + Vite + Element Plus)\n- 添加.gitignore文件\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
+      "Bash(git commit -m \"初始化企业ERP管理系统项目\n\n- 完成前后端项目结构搭建\n- 完成系统需求设计文档\n- 完成数据库设计文档  \n- 完成API接口设计文档\n- 完成项目开发指南文档\n- 配置Django后端环境(Python 3.11 + Django 5.2.5 + DRF)\n- 配置Vue3前端环境(Vue 3.3.8 + Vite + Element Plus)\n- 添加.gitignore文件\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(git config user.email \"erp-system@example.com\")",
+      "Bash(git config user.name \"ERP System\")",
+      "Bash(git commit -m \"$(cat <<''EOF''\n初始化企业ERP管理系统项目\n\n- 完成前后端项目结构搭建\n- 完成系统需求设计文档\n- 完成数据库设计文档  \n- 完成API接口设计文档\n- 完成项目开发指南文档\n- 配置Django后端环境(Python 3.11 + Django 5.2.5 + DRF)\n- 配置Vue3前端环境(Vue 3.3.8 + Vite + Element Plus)\n- 添加.gitignore文件\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(mysql -u root -pYzs123,. -e \"SHOW DATABASES LIKE ''erp_system'';\")",
+      "Bash(python manage.py runserver)",
+      "Bash(python manage.py makemigrations foundation)",
+      "Bash(python manage.py migrate foundation)",
+      "Bash(mysql -u root -pYzs123,. -e \"DROP DATABASE IF EXISTS erp_system; CREATE DATABASE erp_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\")",
+      "Bash(if exist foundationmigrations0001_initial.py del foundationmigrations0001_initial.py)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat(foundation): 实现基础数据管理模块和用户认证系统\n\n- 实现Department、User、Role、Permission、Menu模型\n- 扩展Django User模型,添加工号、部门、职位等字段\n- 配置自定义用户模型为AUTH_USER_MODEL\n- 注册所有模型到Django admin\n- 实现完整的serializers(部门、用户、角色、权限、菜单)\n- 实现用户认证视图(登录、登出、获取用户信息、获取菜单)\n- 实现RESTful API ViewSets(部门、用户、角色、权限、菜单)\n- 配置URL路由\n- 创建超级管理员账号(admin/admin123)\n- 数据库迁移成功\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
