@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /b)",
+      "Bash(python manage.py check --deploy)",
+      "Bash(findstr /C:\"vue@\" /C:\"element-plus@\" /C:\"axios@\" /C:\"vue-router@\" /C:\"pinia@\" /C:\"vite@\")",
+      "Bash(dir node_modules)",
+      "Bash(findstr \"vue element-plus\")",
+      "Bash(mysql --version)",
+      "Bash(redis-cli --version)",
+      "Bash(redis-cli ping)",
+      "Bash(mysql -u root -pYzs123,. -e \"SELECT 1;\")",
+      "Bash(mysql -u root -pYzs123,. -e \"SHOW DATABASES LIKE ''''erp_system'''';\")",
+      "Bash(findstr \"erp_system\")",
+      "Bash(dir venv)",
+      "Bash(findstr \"Directory\")",
+      "Bash(python manage.py check)",
+      "Bash(python manage.py makemigrations)",
+      "Bash(python manage.py migrate)",
+      "Bash(npm run dev)",
+      "Bash(git init)",
+      "Bash(git add .)",
+      "Bash(git commit -m \"初始化企业ERP管理系统项目\n\n- 完成前后端项目结构搭建\n- 完成系统需求设计文档\n- 完成数据库设计文档  \n- 完成API接口设计文档\n- 完成项目开发指南文档\n- 配置Django后端环境(Python 3.11 + Django 5.2.5 + DRF)\n- 配置Vue3前端环境(Vue 3.3.8 + Vite + Element Plus)\n- 添加.gitignore文件\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
