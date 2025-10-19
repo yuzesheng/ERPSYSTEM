@@ -17,6 +17,17 @@
           <el-icon><Monitor /></el-icon>
           <span>工作台</span>
         </el-menu-item>
+
+        <el-sub-menu index="/foundation">
+          <template #title>
+            <el-icon><Setting /></el-icon>
+            <span>基础数据</span>
+          </template>
+          <el-menu-item index="/foundation/department">
+            <el-icon><OfficeBuilding /></el-icon>
+            <span>部门管理</span>
+          </el-menu-item>
+        </el-sub-menu>
       </el-menu>
     </el-aside>
 
@@ -81,7 +92,8 @@ import {
   Expand,
   User,
   Setting,
-  SwitchButton
+  SwitchButton,
+  OfficeBuilding
 } from '@element-plus/icons-vue'
 
 const router = useRouter()

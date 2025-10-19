@@ -36,7 +36,14 @@
       "Bash(find . -name \"nul\" -type f -delete)",
       "Bash(git commit -m \"$(cat <<''EOF''\nfix(frontend): 修复登录功能和页面样式问题\n\n- 修复登录时数据结构不匹配的问题(access_token vs access)\n- 修复响应拦截器返回数据格式\n- 优化登录页面样式,修复布局问题\n- 使用position: fixed确保登录页面全屏显示\n- 增加登录框尺寸和内边距,提升视觉效果\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
       "Bash(git commit -m \"$(cat <<''EOF''\nfix(frontend): 修复登录后死循环问题\n\n- 修复setToken函数参数问题,支持同时保存access_token和refresh_token\n- 简化路由守卫逻辑,移除不必要的getUserInfo调用\n- 登录后直接使用已获取的用户信息,避免重复请求导致401错误\n- 修复removeToken函数同时删除两个token\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "Bash(git commit -m \"$(cat <<''EOF''\nfix(frontend): 修复主页布局问题,实现全屏显示\n\n- 重写全局样式,移除限制宽度的样式\n- 修复body和#app的布局,使其全屏显示\n- 修复MainLayout和Dashboard的宽高设置\n- 添加自定义滚动条样式\n- 优化全局字体和颜色\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix(frontend): 修复主页布局问题,实现全屏显示\n\n- 重写全局样式,移除限制宽度的样式\n- 修复body和#app的布局,使其全屏显示\n- 修复MainLayout和Dashboard的宽高设置\n- 添加自定义滚动条样式\n- 优化全局字体和颜色\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git add README.md)",
+      "Bash(git commit -m \"docs: 更新README文档,添加项目进度和更新日志\")",
+      "Bash(git remote add origin https://github.com/yuzesheng/ERPSYSTEM.git)",
+      "Bash(git branch -M main)",
+      "Bash(git push -u origin main)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat(foundation): 实现部门管理功能\n\n- 创建部门管理API接口文件\n- 实现部门管理页面(树形结构展示)\n- 实现部门的增删改查功能\n- 实现部门树形选择器\n- 添加部门搜索、展开/收起功能\n- 更新侧边栏菜单,添加部门管理入口\n- 更新路由配置\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push)"
     ],
     "deny": [],
     "ask": []

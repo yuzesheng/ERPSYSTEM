@@ -24,6 +24,19 @@ const routes = [
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index.vue'),
         meta: { title: '工作台', icon: 'Monitor' }
+      },
+      {
+        path: 'foundation',
+        name: 'Foundation',
+        meta: { title: '基础数据', icon: 'Setting' },
+        children: [
+          {
+            path: 'department',
+            name: 'Department',
+            component: () => import('@/views/foundation/department/index.vue'),
+            meta: { title: '部门管理', icon: 'OfficeBuilding' }
+          }
+        ]
       }
     ]
   },
