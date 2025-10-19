@@ -60,19 +60,8 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth !== false) {
     // 需要登录
     if (token) {
-      // 已登录
-      if (!userStore.userInfo) {
-        try {
-          await userStore.getUserInfo()
-          next()
-        } catch (error) {
-          console.error('获取用户信息失败:', error)
-          userStore.logout()
-          next(`/login?redirect=${to.path}`)
-        }
-      } else {
-        next()
-      }
+      // 已登录,直接放行
+      next()
     } else {
       // 未登录，跳转登录页
       next(`/login?redirect=${to.path}`)

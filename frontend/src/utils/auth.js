@@ -8,12 +8,17 @@ export function getToken() {
   return Cookies.get(TokenKey)
 }
 
-export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+export function setToken(token, refreshToken) {
+  Cookies.set(TokenKey, token)
+  if (refreshToken) {
+    Cookies.set(RefreshTokenKey, refreshToken)
+  }
+  return token
 }
 
 export function removeToken() {
-  return Cookies.remove(TokenKey)
+  Cookies.remove(TokenKey)
+  Cookies.remove(RefreshTokenKey)
 }
 
 // Refresh Token管理
