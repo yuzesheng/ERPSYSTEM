@@ -110,7 +110,8 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .dashboard-container {
-  padding: 20px;
+  width: 100%;
+  height: 100%;
 }
 
 .welcome-card {
