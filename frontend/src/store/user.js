@@ -13,9 +13,11 @@ export const useUserStore = defineStore('user', () => {
   const login = async (loginForm) => {
     try {
       const res = await loginApi(loginForm)
-      const { access, refresh } = res.data
-      token.value = access
-      setToken(access, refresh)
+      // 后端返回的数据结构: {code: 200, message: '登录成功', data: {access_token, refresh_token, user}}
+      const { access_token, refresh_token, user } = res.data
+      token.value = access_token
+      userInfo.value = user
+      setToken(access_token, refresh_token)
       return res
     } catch (error) {
       return Promise.reject(error)

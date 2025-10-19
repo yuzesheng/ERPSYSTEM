@@ -85,7 +85,8 @@ service.interceptors.response.use(
 
       return Promise.reject(new Error(res.message || '请求失败'))
     } else {
-      return res.data || res
+      // 返回完整的响应对象,保持data字段
+      return res
     }
   },
   error => {
