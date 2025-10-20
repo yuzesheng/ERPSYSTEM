@@ -3,7 +3,11 @@
     "allow": [
       "Bash(if [ -f nul ])",
       "Bash(then rm nul)",
-      "Bash(fi)"
+      "Bash(fi)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat(supplier): 实现供应商管理模块和基础数据初始化\n\n后端实现：\n- 创建Supplier模型（供应商编码、名称、类型、等级、联系信息等）\n- 实现SupplierSerializer序列化器\n- 实现SupplierViewSet视图集（完整CRUD、分页、软删除）\n- 注册Supplier到Django admin\n- 添加供应商管理路由\n\n前端实现：\n- 创建供应商管理API接口（src/api/supplier.js）\n- 实现供应商管理页面（src/views/foundation/supplier/index.vue）\n  - 供应商列表展示（表格、分页）\n  - 搜索筛选功能（编码、名称、类型、等级、状态）\n  - 新增/编辑供应商对话框\n  - 删除供应商确认\n  - 完整的表单验证\n- 更新路由配置，添加供应商管理路由\n- 更新侧边栏菜单，添加供应商管理入口\n- 导入Ship图标\n\n基础数据初始化：\n- 创建Django管理命令（init_foundation_data.py）\n- 初始化60个权限（foundation、inventory、sales、purchase等模块）\n- 初始化19个部门（企业集团总部 + 5个一级中心 + 13个二级部门）\n- 初始化13个角色（超级管理员、系统管理员、总经理、部门经理、财务、人事、销售、采购、生产、研发、IT、仓库、普通员工）\n- 为每个角色分配对应的权限\n- 成功运行初始化命令并验证数据\n\n数据库迁移：\n- 创建foundation_supplier表\n- 运行初始化命令填充基础数据\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(python manage.py startapp inventory)",
+      "Bash(python manage.py makemigrations inventory)",
+      "Bash(python manage.py migrate inventory)"
     ],
     "deny": [],
     "ask": []
