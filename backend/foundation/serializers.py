@@ -4,8 +4,8 @@ from .models import Department, User, Role, Permission, Menu
 
 class DepartmentSerializer(serializers.ModelSerializer):
     """部门序列化器"""
-    manager_name = serializers.CharField(source='manager.username', read_only=True)
-    parent_name = serializers.CharField(source='parent.name', read_only=True)
+    manager_name = serializers.CharField(source='manager.username', read_only=True, allow_null=True)
+    parent_name = serializers.CharField(source='parent.name', read_only=True, allow_null=True)
 
     class Meta:
         model = Department
@@ -13,6 +13,11 @@ class DepartmentSerializer(serializers.ModelSerializer):
                   'manager_name', 'description', 'sort_order', 'is_active',
                   'created_at', 'updated_at']
         read_only_fields = ['created_at', 'updated_at']
+        extra_kwargs = {
+            'parent': {'required': False, 'allow_null': True},
+            'manager': {'required': False, 'allow_null': True},
+            'description': {'required': False, 'allow_blank': True, 'allow_null': True}
+        }
 
 
 class PermissionSerializer(serializers.ModelSerializer):

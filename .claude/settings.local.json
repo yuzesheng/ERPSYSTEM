@@ -43,7 +43,16 @@
       "Bash(git branch -M main)",
       "Bash(git push -u origin main)",
       "Bash(git commit -m \"$(cat <<''EOF''\nfeat(foundation): 实现部门管理功能\n\n- 创建部门管理API接口文件\n- 实现部门管理页面(树形结构展示)\n- 实现部门的增删改查功能\n- 实现部门树形选择器\n- 添加部门搜索、展开/收起功能\n- 更新侧边栏菜单,添加部门管理入口\n- 更新路由配置\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(curl http://127.0.0.1:8000/api/departments/tree/)",
+      "Bash(python manage.py init_departments)",
+      "Bash(git add frontend/vite.config.js backend/foundation/management/commands/init_departments.py backend/foundation/management/__init__.py backend/foundation/management/commands/__init__.py)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix(api): 修复Vite代理配置和创建部门初始化命令\n\n- 移除vite.config.js中错误的API路径重写规则,修复/api前缀被剥离的问题\n- 创建部门数据初始化管理命令(init_departments.py)\n- 初始化19个部门的层级结构测试数据\n- 包括企业集团总部及5个一级中心和13个二级部门\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git add frontend/src/api/auth.js)",
+      "Bash(git commit -m \"fix(api): 修复auth.js中API路径重复/api前缀的问题\n\n- 移除auth.js中所有API路径的/api前缀\n- baseURL已经配置为/api,无需在路径中重复添加\n- 修复登录404错误(/api/api/auth/login/ -> /api/auth/login/)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
+      "Bash(timeout 3)",
+      "Bash(curl -X POST http://127.0.0.1:8000/api/departments/ -H \"Content-Type: application/json\" -d \"{\"\"name\"\":\"\"测试部门\"\",\"\"code\"\":\"\"TEST001\"\",\"\"sort_order\"\":1,\"\"is_active\"\":true}\")",
+      "Bash(git add -A)"
     ],
     "deny": [],
     "ask": []

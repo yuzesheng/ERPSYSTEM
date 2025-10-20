@@ -263,12 +263,15 @@ const handleDelete = (row) => {
     }
   ).then(async () => {
     try {
-      await deleteDepartment(row.id)
+      const res = await deleteDepartment(row.id)
+      console.log('删除响应:', res)
       ElMessage.success('删除成功')
       loadData()
     } catch (error) {
-      ElMessage.error('删除失败')
-      console.error(error)
+      console.error('删除错误:', error)
+      console.error('删除错误详情:', error.response?.data)
+      const errorMsg = error.response?.data?.message || error.message || '删除失败'
+      ElMessage.error(errorMsg)
     }
   }).catch(() => {})
 }
@@ -282,18 +285,27 @@ const handleSubmit = async () => {
       submitting.value = true
       try {
         const data = { ...form }
+        console.log('提交的数据:', data)
         if (isEdit.value) {
-          await updateDepartment(data.id, data)
+          const res = await updateDepartment(data.id, data)
+          console.log('更新响应:', res)
           ElMessage.success('编辑成功')
         } else {
-          await createDepartment(data)
+          const res = await createDepartment(data)
+          console.log('创建响应:', res)
           ElMessage.success('新增成功')
         }
         dialogVisible.value = false
         loadData()
       } catch (error) {
-        ElMessage.error(isEdit.value ? '编辑失败' : '新增失败')
-        console.error(error)
+        console.error('提交错误:', error)
+        console.error('错误详情:', error.response?.data)
+        const errorMsg = error.response?.data?.message || error.message || (isEdit.value ? '编辑失败' : '新增失败')
+        ElMessage.error(errorMsg)
+        // 如果有具体的字段错误，也显示出来
+        if (error.response?.data?.data) {
+          console.error('字段错误:', error.response.data.data)
+        }
       } finally {
         submitting.value = false
       }
