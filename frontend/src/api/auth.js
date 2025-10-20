@@ -5,21 +5,21 @@ import request from '@/utils/request'
  * @param {Object} data - 登录信息 { username, password }
  */
 export const login = (data) => {
-  return request.post('/api/auth/login/', data)
+  return request.post('/auth/login/', data)
 }
 
 /**
  * 用户退出登录
  */
 export const logout = () => {
-  return request.post('/api/auth/logout/')
+  return request.post('/auth/logout/')
 }
 
 /**
  * 获取用户信息
  */
 export const getUserInfo = () => {
-  return request.get('/api/auth/userinfo/')
+  return request.get('/auth/userinfo/')
 }
 
 /**
@@ -27,7 +27,7 @@ export const getUserInfo = () => {
  * @param {String} refresh - Refresh Token
  */
 export const refreshToken = (refresh) => {
-  return request.post('/api/auth/token/refresh/', { refresh })
+  return request.post('/auth/token/refresh/', { refresh })
 }
 
 /**
@@ -35,7 +35,7 @@ export const refreshToken = (refresh) => {
  * @param {Object} data - { old_password, new_password }
  */
 export const changePassword = (data) => {
-  return request.post('/api/auth/change-password/', data)
+  return request.post('/auth/change-password/', data)
 }
 
 /**
@@ -43,5 +43,5 @@ export const changePassword = (data) => {
  * @param {Object} data - { email }
  */
 export const resetPassword = (data) => {
-  return request.post('/api/auth/reset-password/', data)
+  return request.post('/auth/reset-password/', data)
 }
