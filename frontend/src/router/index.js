@@ -53,6 +53,12 @@ const routes = [
             name: 'Menu',
             component: () => import('@/views/foundation/menu/index.vue'),
             meta: { title: '菜单管理', icon: 'Menu' }
+          },
+          {
+            path: 'customer',
+            name: 'Customer',
+            component: () => import('@/views/foundation/customer/index.vue'),
+            meta: { title: '客户管理', icon: 'Avatar' }
           }
         ]
       }

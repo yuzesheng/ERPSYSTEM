@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from mptt.admin import MPTTModelAdmin
-from .models import Department, User, Role, Permission, Menu
+from .models import Department, User, Role, Permission, Menu, Customer
 
 
 @admin.register(Department)
@@ -58,3 +58,13 @@ class MenuAdmin(MPTTModelAdmin):
     search_fields = ['title', 'name', 'path']
     mptt_level_indent = 20
     ordering = ['sort_order']
+
+
+@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ['customer_code', 'customer_name', 'customer_type', 'customer_level',
+                    'contact_person', 'contact_phone', 'status', 'created_at']
+    list_filter = ['customer_type', 'customer_level', 'status', 'created_at']
+    search_fields = ['customer_code', 'customer_name', 'contact_person', 'contact_phone']
+    ordering = ['-created_at']
+    readonly_fields = ['created_at', 'updated_at', 'created_by', 'updated_by']

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Department, User, Role, Permission, Menu
+from .models import Department, User, Role, Permission, Menu, Customer
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
@@ -174,3 +174,34 @@ class UserProfileSerializer(serializers.ModelSerializer):
             for perm in role.permissions.all():
                 permissions.add(perm.code)
         return list(permissions)
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+    """客户序列化器"""
+    customer_type_display = serializers.CharField(source='get_customer_type_display', read_only=True)
+    customer_level_display = serializers.CharField(source='get_customer_level_display', read_only=True)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
+    created_by_name = serializers.CharField(source='created_by.username', read_only=True)
+    updated_by_name = serializers.CharField(source='updated_by.username', read_only=True)
+
+    class Meta:
+        model = Customer
+        fields = ['id', 'customer_code', 'customer_name', 'customer_type', 'customer_type_display',
+                  'customer_level', 'customer_level_display', 'industry', 'contact_person',
+                  'contact_phone', 'contact_email', 'address', 'credit_limit', 'credit_days',
+                  'status', 'status_display', 'remark', 'created_at', 'updated_at',
+                  'created_by', 'created_by_name', 'updated_by', 'updated_by_name']
+        read_only_fields = ['created_at', 'updated_at', 'created_by', 'updated_by']
+
+    def validate_customer_code(self, value):
+        """验证客户编码唯一性"""
+        instance = self.instance
+        if instance:
+            # 更新时排除自己
+            if Customer.objects.exclude(pk=instance.pk).filter(customer_code=value).exists():
+                raise serializers.ValidationError('客户编码已存在')
+        else:
+            # 新增时检查
+            if Customer.objects.filter(customer_code=value).exists():
+                raise serializers.ValidationError('客户编码已存在')
+        return value

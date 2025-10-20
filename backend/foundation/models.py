@@ -203,3 +203,68 @@ class Menu(MPTTModel):
 
     def __str__(self):
         return self.title
+
+
+class Customer(models.Model):
+    """客户模型"""
+    CUSTOMER_TYPE_CHOICES = [
+        (1, '企业'),
+        (2, '个人'),
+    ]
+
+    CUSTOMER_LEVEL_CHOICES = [
+        (1, '重要'),
+        (2, '普通'),
+        (3, '一般'),
+    ]
+
+    STATUS_CHOICES = [
+        (1, '正常'),
+        (0, '停用'),
+    ]
+
+    customer_code = models.CharField('客户编码', max_length=50, unique=True)
+    customer_name = models.CharField('客户名称', max_length=200)
+    customer_type = models.IntegerField('客户类型', choices=CUSTOMER_TYPE_CHOICES, default=1)
+    customer_level = models.IntegerField('客户等级', choices=CUSTOMER_LEVEL_CHOICES, default=2)
+    industry = models.CharField('所属行业', max_length=100, blank=True)
+    contact_person = models.CharField('联系人', max_length=50, blank=True)
+    contact_phone = models.CharField('联系电话', max_length=20, blank=True)
+    contact_email = models.EmailField('联系邮箱', blank=True)
+    address = models.CharField('详细地址', max_length=500, blank=True)
+    credit_limit = models.DecimalField('信用额度', max_digits=18, decimal_places=2, default=0)
+    credit_days = models.IntegerField('账期天数', default=0)
+    status = models.IntegerField('状态', choices=STATUS_CHOICES, default=1)
+    remark = models.CharField('备注', max_length=500, blank=True)
+    created_at = models.DateTimeField('创建时间', auto_now_add=True)
+    updated_at = models.DateTimeField('更新时间', auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='created_customers',
+        verbose_name='创建人'
+    )
+    updated_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='updated_customers',
+        verbose_name='更新人'
+    )
+    is_deleted = models.BooleanField('是否删除', default=False)
+
+    class Meta:
+        db_table = 'foundation_customer'
+        verbose_name = '客户'
+        verbose_name_plural = '客户'
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['customer_code']),
+            models.Index(fields=['customer_name']),
+        ]
+
+    def __str__(self):
+        return f"{self.customer_code} - {self.customer_name}"

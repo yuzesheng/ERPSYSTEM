@@ -4,7 +4,7 @@ from .views import (
     CustomTokenObtainPairView, CustomTokenRefreshView,
     logout, get_user_info, get_user_menus,
     DepartmentViewSet, UserViewSet, RoleViewSet,
-    PermissionViewSet, MenuViewSet
+    PermissionViewSet, MenuViewSet, CustomerViewSet
 )
 
 # 创建路由器
@@ -14,6 +14,7 @@ router.register('users', UserViewSet)
 router.register('roles', RoleViewSet)
 router.register('permissions', PermissionViewSet)
 router.register('menus', MenuViewSet)
+router.register('customers', CustomerViewSet)
 
 urlpatterns = [
     # 认证相关
