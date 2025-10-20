@@ -48,6 +48,25 @@
             <span>供应商管理</span>
           </el-menu-item>
         </el-sub-menu>
+
+        <el-sub-menu index="/inventory">
+          <template #title>
+            <el-icon><Box /></el-icon>
+            <span>库存管理</span>
+          </template>
+          <el-menu-item index="/inventory/material-category">
+            <el-icon><FolderOpened /></el-icon>
+            <span>物料分类</span>
+          </el-menu-item>
+          <el-menu-item index="/inventory/material">
+            <el-icon><Goods /></el-icon>
+            <span>物料管理</span>
+          </el-menu-item>
+          <el-menu-item index="/inventory/warehouse">
+            <el-icon><HomeFilled /></el-icon>
+            <span>仓库管理</span>
+          </el-menu-item>
+        </el-sub-menu>
       </el-menu>
     </el-aside>
 
@@ -117,7 +136,11 @@ import {
   UserFilled,
   Menu,
   Avatar,
-  Ship
+  Ship,
+  Box,
+  FolderOpened,
+  Goods,
+  HomeFilled
 } from '@element-plus/icons-vue'
 
 const router = useRouter()
