@@ -6,12 +6,12 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
 from django.utils import timezone
-from .models import Department, User, Role, Permission, Menu, Customer
+from .models import Department, User, Role, Permission, Menu, Customer, Supplier
 from .serializers import (
     DepartmentSerializer, UserListSerializer, UserDetailSerializer,
     UserCreateSerializer, UserUpdateSerializer, RoleSerializer,
     PermissionSerializer, MenuSerializer, MenuTreeSerializer,
-    UserProfileSerializer, CustomerSerializer
+    UserProfileSerializer, CustomerSerializer, SupplierSerializer
 )
 
 
@@ -703,6 +703,109 @@ class CustomerViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         """删除客户（软删除）"""
+        instance = self.get_object()
+        instance.is_deleted = True
+        instance.save()
+
+        return Response({
+            'code': 200,
+            'message': '删除成功',
+            'data': None
+        })
+
+
+class SupplierViewSet(viewsets.ModelViewSet):
+    """供应商管理视图集"""
+    queryset = Supplier.objects.filter(is_deleted=False)
+    serializer_class = SupplierSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        """获取供应商列表"""
+        queryset = self.filter_queryset(self.get_queryset())
+
+        # 支持分页
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response({
+                'code': 200,
+                'message': '获取成功',
+                'data': serializer.data
+            })
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'code': 200,
+            'message': '获取成功',
+            'data': serializer.data
+        })
+
+    def get_paginated_response(self, data):
+        """自定义分页响应"""
+        return Response({
+            'code': 200,
+            'message': '获取成功',
+            'data': {
+                'count': self.paginator.page.paginator.count,
+                'next': self.paginator.get_next_link(),
+                'previous': self.paginator.get_previous_link(),
+                'results': data['data']
+            }
+        })
+
+    def retrieve(self, request, *args, **kwargs):
+        """获取供应商详情"""
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({
+            'code': 200,
+            'message': '获取成功',
+            'data': serializer.data
+        })
+
+    def create(self, request, *args, **kwargs):
+        """创建供应商"""
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({
+                'code': 400,
+                'message': '数据验证失败',
+                'data': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # 保存时记录创建人
+        serializer.save(created_by=request.user, updated_by=request.user)
+
+        return Response({
+            'code': 200,
+            'message': '创建成功',
+            'data': serializer.data
+        }, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        """更新供应商"""
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        if not serializer.is_valid():
+            return Response({
+                'code': 400,
+                'message': '数据验证失败',
+                'data': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # 保存时记录更新人
+        serializer.save(updated_by=request.user)
+
+        return Response({
+            'code': 200,
+            'message': '更新成功',
+            'data': serializer.data
+        })
+
+    def destroy(self, request, *args, **kwargs):
+        """删除供应商（软删除）"""
         instance = self.get_object()
         instance.is_deleted = True
         instance.save()

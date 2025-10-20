@@ -43,6 +43,10 @@
             <el-icon><Avatar /></el-icon>
             <span>客户管理</span>
           </el-menu-item>
+          <el-menu-item index="/foundation/supplier">
+            <el-icon><Ship /></el-icon>
+            <span>供应商管理</span>
+          </el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-aside>
@@ -112,7 +116,8 @@ import {
   OfficeBuilding,
   UserFilled,
   Menu,
-  Avatar
+  Avatar,
+  Ship
 } from '@element-plus/icons-vue'
 
 const router = useRouter()

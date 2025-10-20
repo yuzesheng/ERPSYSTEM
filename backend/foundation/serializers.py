@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Department, User, Role, Permission, Menu, Customer
+from .models import Department, User, Role, Permission, Menu, Customer, Supplier
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
@@ -204,4 +204,35 @@ class CustomerSerializer(serializers.ModelSerializer):
             # 新增时检查
             if Customer.objects.filter(customer_code=value).exists():
                 raise serializers.ValidationError('客户编码已存在')
+        return value
+
+
+class SupplierSerializer(serializers.ModelSerializer):
+    """供应商序列化器"""
+    supplier_type_display = serializers.CharField(source='get_supplier_type_display', read_only=True)
+    supplier_level_display = serializers.CharField(source='get_supplier_level_display', read_only=True)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
+    created_by_name = serializers.CharField(source='created_by.username', read_only=True)
+    updated_by_name = serializers.CharField(source='updated_by.username', read_only=True)
+
+    class Meta:
+        model = Supplier
+        fields = ['id', 'supplier_code', 'supplier_name', 'supplier_type', 'supplier_type_display',
+                  'supplier_level', 'supplier_level_display', 'contact_person',
+                  'contact_phone', 'contact_email', 'address', 'payment_days',
+                  'status', 'status_display', 'remark', 'created_at', 'updated_at',
+                  'created_by', 'created_by_name', 'updated_by', 'updated_by_name']
+        read_only_fields = ['created_at', 'updated_at', 'created_by', 'updated_by']
+
+    def validate_supplier_code(self, value):
+        """验证供应商编码唯一性"""
+        instance = self.instance
+        if instance:
+            # 更新时排除自己
+            if Supplier.objects.exclude(pk=instance.pk).filter(supplier_code=value).exists():
+                raise serializers.ValidationError('供应商编码已存在')
+        else:
+            # 新增时检查
+            if Supplier.objects.filter(supplier_code=value).exists():
+                raise serializers.ValidationError('供应商编码已存在')
         return value

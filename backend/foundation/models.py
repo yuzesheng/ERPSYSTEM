@@ -268,3 +268,67 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"{self.customer_code} - {self.customer_name}"
+
+
+class Supplier(models.Model):
+    """供应商模型"""
+    SUPPLIER_TYPE_CHOICES = [
+        (1, '生产商'),
+        (2, '经销商'),
+        (3, '代理商'),
+    ]
+
+    SUPPLIER_LEVEL_CHOICES = [
+        (1, 'A级'),
+        (2, 'B级'),
+        (3, 'C级'),
+    ]
+
+    STATUS_CHOICES = [
+        (1, '正常'),
+        (0, '停用'),
+    ]
+
+    supplier_code = models.CharField('供应商编码', max_length=50, unique=True)
+    supplier_name = models.CharField('供应商名称', max_length=200)
+    supplier_type = models.IntegerField('供应商类型', choices=SUPPLIER_TYPE_CHOICES, default=1)
+    supplier_level = models.IntegerField('供应商等级', choices=SUPPLIER_LEVEL_CHOICES, default=2)
+    contact_person = models.CharField('联系人', max_length=50, blank=True)
+    contact_phone = models.CharField('联系电话', max_length=20, blank=True)
+    contact_email = models.EmailField('联系邮箱', blank=True)
+    address = models.CharField('详细地址', max_length=500, blank=True)
+    payment_days = models.IntegerField('付款账期', default=0)
+    status = models.IntegerField('状态', choices=STATUS_CHOICES, default=1)
+    remark = models.CharField('备注', max_length=500, blank=True)
+    created_at = models.DateTimeField('创建时间', auto_now_add=True)
+    updated_at = models.DateTimeField('更新时间', auto_now=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='created_suppliers',
+        verbose_name='创建人'
+    )
+    updated_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='updated_suppliers',
+        verbose_name='更新人'
+    )
+    is_deleted = models.BooleanField('是否删除', default=False)
+
+    class Meta:
+        db_table = 'foundation_supplier'
+        verbose_name = '供应商'
+        verbose_name_plural = '供应商'
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['supplier_code']),
+            models.Index(fields=['supplier_name']),
+        ]
+
+    def __str__(self):
+        return f"{self.supplier_code} - {self.supplier_name}"

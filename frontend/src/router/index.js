@@ -59,6 +59,12 @@ const routes = [
             name: 'Customer',
             component: () => import('@/views/foundation/customer/index.vue'),
             meta: { title: '客户管理', icon: 'Avatar' }
+          },
+          {
+            path: 'supplier',
+            name: 'Supplier',
+            component: () => import('@/views/foundation/supplier/index.vue'),
+            meta: { title: '供应商管理', icon: 'Ship' }
           }
         ]
       }
