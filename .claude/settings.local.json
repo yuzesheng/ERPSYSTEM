@@ -52,7 +52,8 @@
       "Bash(git commit -m \"fix(api): 修复auth.js中API路径重复/api前缀的问题\n\n- 移除auth.js中所有API路径的/api前缀\n- baseURL已经配置为/api,无需在路径中重复添加\n- 修复登录404错误(/api/api/auth/login/ -> /api/auth/login/)\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\")",
       "Bash(timeout 3)",
       "Bash(curl -X POST http://127.0.0.1:8000/api/departments/ -H \"Content-Type: application/json\" -d \"{\"\"name\"\":\"\"测试部门\"\",\"\"code\"\":\"\"TEST001\"\",\"\"sort_order\"\":1,\"\"is_active\"\":true}\")",
-      "Bash(git add -A)"
+      "Bash(git add -A)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat(department): 完善部门管理CRUD功能\n\n后端改进：\n- 修复DepartmentSerializer字段验证，parent/manager/description设为可选\n- 重写DepartmentViewSet的list/retrieve/create/update/destroy方法\n- 统一所有API响应格式为{code, message, data}\n- 添加删除部门前的检查（子部门和员工）\n- 优化tree方法使用serializer构建树形数据\n- 添加IsAuthenticated权限控制\n\n前端改进：\n- 修复auth.js中API路径重复/api前缀问题\n- 完善部门管理页面错误处理和日志\n- 优化删除功能的错误提示\n- 增强表单验证和用户反馈\n\n功能验证：\n- 新增部门功能正常\n- 编辑部门功能正常\n- 删除部门功能正常\n- 树形结构展示正常\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []

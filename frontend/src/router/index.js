@@ -35,6 +35,12 @@ const routes = [
             name: 'Department',
             component: () => import('@/views/foundation/department/index.vue'),
             meta: { title: '部门管理', icon: 'OfficeBuilding' }
+          },
+          {
+            path: 'user',
+            name: 'User',
+            component: () => import('@/views/foundation/user/index.vue'),
+            meta: { title: '用户管理', icon: 'User' }
           }
         ]
       }

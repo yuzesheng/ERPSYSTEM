@@ -273,6 +273,7 @@ class DepartmentViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     """用户管理视图集"""
     queryset = User.objects.all()
+    permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
         if self.action == 'list':
@@ -282,6 +283,102 @@ class UserViewSet(viewsets.ModelViewSet):
         elif self.action in ['update', 'partial_update']:
             return UserUpdateSerializer
         return UserDetailSerializer
+
+    def list(self, request, *args, **kwargs):
+        """获取用户列表"""
+        queryset = self.filter_queryset(self.get_queryset())
+
+        # 支持分页
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response({
+                'code': 200,
+                'message': '获取成功',
+                'data': serializer.data
+            })
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'code': 200,
+            'message': '获取成功',
+            'data': serializer.data
+        })
+
+    def get_paginated_response(self, data):
+        """自定义分页响应"""
+        return Response({
+            'code': 200,
+            'message': '获取成功',
+            'data': {
+                'count': self.paginator.page.paginator.count,
+                'next': self.paginator.get_next_link(),
+                'previous': self.paginator.get_previous_link(),
+                'results': data['data']
+            }
+        })
+
+    def retrieve(self, request, *args, **kwargs):
+        """获取用户详情"""
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({
+            'code': 200,
+            'message': '获取成功',
+            'data': serializer.data
+        })
+
+    def create(self, request, *args, **kwargs):
+        """创建用户"""
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({
+                'code': 400,
+                'message': '数据验证失败',
+                'data': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+        self.perform_create(serializer)
+        return Response({
+            'code': 200,
+            'message': '创建成功',
+            'data': serializer.data
+        }, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        """更新用户"""
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        if not serializer.is_valid():
+            return Response({
+                'code': 400,
+                'message': '数据验证失败',
+                'data': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+        self.perform_update(serializer)
+        return Response({
+            'code': 200,
+            'message': '更新成功',
+            'data': serializer.data
+        })
+
+    def destroy(self, request, *args, **kwargs):
+        """删除用户"""
+        instance = self.get_object()
+
+        # 检查是否是超级管理员
+        if instance.is_superuser:
+            return Response({
+                'code': 400,
+                'message': '超级管理员不能删除'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        self.perform_destroy(instance)
+        return Response({
+            'code': 200,
+            'message': '删除成功',
+            'data': None
+        })
 
     @action(detail=True, methods=['post'])
     def reset_password(self, request, pk=None):
@@ -300,7 +397,8 @@ class UserViewSet(viewsets.ModelViewSet):
 
         return Response({
             'code': 200,
-            'message': '密码重置成功'
+            'message': '密码重置成功',
+            'data': None
         })
 
 

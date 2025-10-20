@@ -27,6 +27,10 @@
             <el-icon><OfficeBuilding /></el-icon>
             <span>部门管理</span>
           </el-menu-item>
+          <el-menu-item index="/foundation/user">
+            <el-icon><User /></el-icon>
+            <span>用户管理</span>
+          </el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-aside>
