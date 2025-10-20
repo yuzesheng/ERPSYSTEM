@@ -41,6 +41,12 @@ const routes = [
             name: 'User',
             component: () => import('@/views/foundation/user/index.vue'),
             meta: { title: '用户管理', icon: 'User' }
+          },
+          {
+            path: 'role',
+            name: 'Role',
+            component: () => import('@/views/foundation/role/index.vue'),
+            meta: { title: '角色管理', icon: 'UserFilled' }
           }
         ]
       }
