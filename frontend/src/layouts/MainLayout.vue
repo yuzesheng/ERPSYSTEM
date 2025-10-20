@@ -35,6 +35,10 @@
             <el-icon><UserFilled /></el-icon>
             <span>角色管理</span>
           </el-menu-item>
+          <el-menu-item index="/foundation/menu">
+            <el-icon><Menu /></el-icon>
+            <span>菜单管理</span>
+          </el-menu-item>
         </el-sub-menu>
       </el-menu>
     </el-aside>
@@ -102,7 +106,8 @@ import {
   Setting,
   SwitchButton,
   OfficeBuilding,
-  UserFilled
+  UserFilled,
+  Menu
 } from '@element-plus/icons-vue'
 
 const router = useRouter()

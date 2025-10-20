@@ -525,6 +525,79 @@ class MenuViewSet(viewsets.ModelViewSet):
     """菜单管理视图集"""
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        """获取菜单列表"""
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'code': 200,
+            'message': '获取成功',
+            'data': serializer.data
+        })
+
+    def retrieve(self, request, *args, **kwargs):
+        """获取菜单详情"""
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response({
+            'code': 200,
+            'message': '获取成功',
+            'data': serializer.data
+        })
+
+    def create(self, request, *args, **kwargs):
+        """创建菜单"""
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({
+                'code': 400,
+                'message': '数据验证失败',
+                'data': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+        self.perform_create(serializer)
+        return Response({
+            'code': 200,
+            'message': '创建成功',
+            'data': serializer.data
+        }, status=status.HTTP_201_CREATED)
+
+    def update(self, request, *args, **kwargs):
+        """更新菜单"""
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        if not serializer.is_valid():
+            return Response({
+                'code': 400,
+                'message': '数据验证失败',
+                'data': serializer.errors
+            }, status=status.HTTP_400_BAD_REQUEST)
+        self.perform_update(serializer)
+        return Response({
+            'code': 200,
+            'message': '更新成功',
+            'data': serializer.data
+        })
+
+    def destroy(self, request, *args, **kwargs):
+        """删除菜单"""
+        instance = self.get_object()
+
+        # 检查是否有子菜单
+        if Menu.objects.filter(parent=instance).exists():
+            return Response({
+                'code': 400,
+                'message': '该菜单下有子菜单，无法删除'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        self.perform_destroy(instance)
+        return Response({
+            'code': 200,
+            'message': '删除成功',
+            'data': None
+        })
 
     @action(detail=False, methods=['get'])
     def tree(self, request):
